@@ -7,5 +7,6 @@ const app = new cdk.App();
 
 new HelloCargoLambdaCdkPipelineStack(app, "HelloCargoLambdaCdkPipeline", {
   ...PIPELINE_PARAMETERS.DEV,
+  envAlias: "DEV",
   appParameter: APP_PARAMETERS.DEV,
 });

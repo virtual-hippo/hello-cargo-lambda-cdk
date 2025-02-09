@@ -2,10 +2,11 @@ import * as cdk from "aws-cdk-lib";
 import { aws_iam as iam, pipelines } from "aws-cdk-lib";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { Construct } from "constructs";
-import { AppParameterType } from "../parameters";
+import { AppParameterType, Env } from "../parameters";
 import { HelloCargoLambdaCdkStage } from "../stages";
 
 export interface HelloCargoLambdaCdkPipelineProps extends cdk.StackProps {
+  readonly envAlias: Env;
   readonly sourceRepository: string;
   readonly sourceBranch: string;
   readonly appParameter: AppParameterType;
@@ -44,11 +45,8 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
       commands: ["cd cdk", "pnpm i --frozen-lockfile", "pnpm cdk test"],
     });
 
-    pipeline.addStage(
-      new HelloCargoLambdaCdkStage(this, "HelloCargoLambdaCdkStage", { appParameter: props.appParameter }),
-      {
-        pre: [testStep],
-      },
-    );
+    pipeline.addStage(new HelloCargoLambdaCdkStage(this, props.envAlias, { appParameter: props.appParameter }), {
+      pre: [testStep],
+    });
   }
 }
