@@ -1,5 +1,7 @@
 FROM ghcr.io/cargo-lambda/cargo-lambda:1.6.3
 
+RUN cargo install --force cargo-make
+
 # Reference: https://github.com/aws/aws-codebuild-docker-images/blob/master/ubuntu/standard/7.0/Dockerfile
 
 # Install AWS CLI v2
