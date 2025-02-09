@@ -34,7 +34,13 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
           connectionArn: connectionArn,
         }),
         installCommands: ["n stable", "node --version", "npm i -g pnpm@9.15.4", "pnpm --version"],
-        commands: ["cd cdk", "pnpm i --frozen-lockfile -P", "pnpm cdk synth"],
+        commands: [
+          // アカウント ID 明示的に定義していないので動的に指定する
+          "export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)",
+          "cd cdk",
+          "pnpm i --frozen-lockfile",
+          "pnpm cdk synth",
+        ],
         role: deployRole,
         primaryOutputDirectory: "./cdk/cdk.out",
       }),
