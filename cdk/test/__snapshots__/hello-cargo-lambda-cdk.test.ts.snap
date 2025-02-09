@@ -237,7 +237,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                   "Version": "1",
                 },
                 "Configuration": {
-                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"570a38b73d565ab45aef861a10c176c6b8adb7a2986141d0538acd9f182459fe"}]",
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"3c7a0d60b511552e95d4407a763eff92456d09058a9fe198c691990c76e03617"}]",
                   "ProjectName": {
                     "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                   },
@@ -274,7 +274,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                   "Version": "1",
                 },
                 "Configuration": {
-                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"814c134c953198966fde6d48e7283ade22e2635df11ca5a785d857a9343beb38"}]",
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"af86bfbd8d81488c4660b6a9c5694c155e88907d96ac1fa30d22182a627bec47"}]",
                   "ProjectName": {
                     "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                   },
@@ -593,7 +593,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
           "Image": {
-            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:949906fd5fd21774db990dd99a36456e96672a41ff8cd4ce4cbfd6de94461a22",
           },
           "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
@@ -616,7 +616,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
     },
     "build": {
       "commands": [
-        "cdk-assets --path \\"assembly-HelloCargoLambdaCdkPipeline-Dev/HelloCargoLambdaCdkPipelineDevHelloCargoLambdaCdk0A053A3D.assets.json\\" --verbose publish \\"fe0b70fd363593ed216d2a0f76f6755229384e26f51c1eccb789df323a5192d1:current_account-ap-northeast-1\\""
+        "cdk-assets --path \\"assembly-HelloCargoLambdaCdkPipeline-Dev/HelloCargoLambdaCdkPipelineDevHelloCargoLambdaCdk0A053A3D.assets.json\\" --verbose publish \\"1f3eb234724e71834b2ed8fd88047480c79ddebbc0ae502ecb8901bff774a7f7:current_account-ap-northeast-1\\""
       ]
     }
   }
@@ -785,7 +785,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
           "Image": {
-            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:949906fd5fd21774db990dd99a36456e96672a41ff8cd4ce4cbfd6de94461a22",
           },
           "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
@@ -927,7 +927,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
           "Image": {
-            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:949906fd5fd21774db990dd99a36456e96672a41ff8cd4ce4cbfd6de94461a22",
           },
           "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
@@ -1346,7 +1346,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
           "Image": {
-            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:949906fd5fd21774db990dd99a36456e96672a41ff8cd4ce4cbfd6de94461a22",
           },
           "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
@@ -1611,7 +1611,7 @@ exports[`Snapshot test for Dev stage 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-ap-northeast-1",
           },
-          "S3Key": "fe0b70fd363593ed216d2a0f76f6755229384e26f51c1eccb789df323a5192d1.zip",
+          "S3Key": "1f3eb234724e71834b2ed8fd88047480c79ddebbc0ae502ecb8901bff774a7f7.zip",
         },
         "Handler": "bootstrap",
         "Role": {
