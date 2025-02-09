@@ -17,6 +17,10 @@ test("Snapshot test for Dev pipeline", () => {
   const app = new cdk.App();
   const pipelineStack = new HelloCargoLambdaCdkPipelineStack(app, "HelloCargoLambdaCdkPipeline", {
     ...PIPELINE_PARAMETERS.Dev,
+    env: {
+      account: "123456789012",
+      region: PIPELINE_PARAMETERS.Dev.env.region,
+    },
     envAlias: "Dev",
     appParameter: APP_PARAMETERS.Dev,
   });
