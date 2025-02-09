@@ -353,7 +353,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                 },
                 "Configuration": {
                   "ProjectName": {
-                    "Ref": "PipelineDevRunTests71115AFB",
+                    "Ref": "PipelineDevTestingC2461F2F",
                   },
                 },
                 "InputArtifacts": [
@@ -361,7 +361,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                     "Name": "virtual_hippo_hello_cargo_lambda_cdk_Source",
                   },
                 ],
-                "Name": "RunTests",
+                "Name": "Testing",
                 "RoleArn": {
                   "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
@@ -995,7 +995,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
               "Effect": "Allow",
               "Resource": {
                 "Fn::GetAtt": [
-                  "PipelineDevRunTests71115AFB",
+                  "PipelineDevTestingC2461F2F",
                   "Arn",
                 ],
               },
@@ -1012,7 +1012,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineDevRunTests71115AFB": {
+    "PipelineDevTestingC2461F2F": {
       "Properties": {
         "Artifacts": {
           "Type": "CODEPIPELINE",
@@ -1020,7 +1020,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
         "Cache": {
           "Type": "NO_CACHE",
         },
-        "Description": "Pipeline step HelloCargoLambdaCdkPipeline/Pipeline/Dev/RunTests",
+        "Description": "Pipeline step HelloCargoLambdaCdkPipeline/Pipeline/Dev/Testing",
         "EncryptionKey": {
           "Fn::GetAtt": [
             "PipelineArtifactsBucketEncryptionKeyF5BF0670",
@@ -1036,7 +1036,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
         },
         "ServiceRole": {
           "Fn::GetAtt": [
-            "PipelineDevRunTestsRole5F456CD5",
+            "PipelineDevTestingRoleA5456581",
             "Arn",
           ],
         },
@@ -1056,7 +1056,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       "commands": [
         "cd cdk",
         "pnpm i --frozen-lockfile",
-        "pnpm cdk test"
+        "pnpm test"
       ]
     }
   }
@@ -1066,7 +1066,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineDevRunTestsRole5F456CD5": {
+    "PipelineDevTestingRoleA5456581": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -1083,7 +1083,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineDevRunTestsRoleDefaultPolicyAF976377": {
+    "PipelineDevTestingRoleDefaultPolicy174D5BC3": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -1105,7 +1105,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                       },
                       ":logs:ap-northeast-1:123456789012:log-group:/aws/codebuild/",
                       {
-                        "Ref": "PipelineDevRunTests71115AFB",
+                        "Ref": "PipelineDevTestingC2461F2F",
                       },
                     ],
                   ],
@@ -1120,7 +1120,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                       },
                       ":logs:ap-northeast-1:123456789012:log-group:/aws/codebuild/",
                       {
-                        "Ref": "PipelineDevRunTests71115AFB",
+                        "Ref": "PipelineDevTestingC2461F2F",
                       },
                       ":*",
                     ],
@@ -1147,7 +1147,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                     },
                     ":codebuild:ap-northeast-1:123456789012:report-group/",
                     {
-                      "Ref": "PipelineDevRunTests71115AFB",
+                      "Ref": "PipelineDevTestingC2461F2F",
                     },
                     "-*",
                   ],
@@ -1215,10 +1215,10 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "PipelineDevRunTestsRoleDefaultPolicyAF976377",
+        "PolicyName": "PipelineDevTestingRoleDefaultPolicy174D5BC3",
         "Roles": [
           {
-            "Ref": "PipelineDevRunTestsRole5F456CD5",
+            "Ref": "PipelineDevTestingRoleA5456581",
           },
         ],
       },
