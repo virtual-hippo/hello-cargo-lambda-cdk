@@ -27,6 +27,13 @@ cd cdk
 pnpm cdk deploy
 '''
 
+[tasks.lint-cdk]
+script = '''
+#!/usr/bin/env bash
+cd cdk
+pnpm lint
+'''
+
 [tasks.fmt]
 install_script = ['''
 #!/usr/bin/env bash
@@ -38,6 +45,8 @@ fi
 script = '''
 #!/usr/bin/env bash
 cargo +nightly fmt
+cd cdk
+pnpm fmt
 '''
 
 [tasks.clippy]
