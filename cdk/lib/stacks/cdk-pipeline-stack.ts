@@ -45,6 +45,9 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
           "export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)",
           "cd cdk",
           "pnpm i --frozen-lockfile",
+          "pnpm fmt",
+          "pnpm lint",
+          "pnpm test",
           "pnpm cdk synth",
         ],
         role: deployRole,
@@ -53,7 +56,7 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
     });
 
     const testStep = new pipelines.ShellStep("Testing", {
-      commands: ["cd cdk", "pnpm i --frozen-lockfile", "pnpm test"],
+      commands: ["makers clippy-ci, makers test-ci"],
     });
 
     pipeline.addStage(new HelloCargoLambdaCdkStage(this, props.envAlias, { appParameter: props.appParameter }), {
