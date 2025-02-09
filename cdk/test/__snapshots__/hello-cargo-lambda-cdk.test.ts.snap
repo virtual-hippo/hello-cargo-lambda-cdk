@@ -252,7 +252,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                   "Version": "1",
                 },
                 "Configuration": {
-                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"f5a95ffe5dc5387b3c2c90eac40f2a98be7aaeead8b7b89fa21b583ebf873e71"}]",
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"1d8f4ef957dc7c28176bd159487828eb342ee0eaad8424eba9a9a5486515ced5"}]",
                   "ProjectName": {
                     "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                   },
@@ -901,8 +901,9 @@ exports[`Snapshot test for Dev pipeline 1`] = `
     },
     "build": {
       "commands": [
+        "export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)",
         "cd cdk",
-        "pnpm i --frozen-lockfile -P",
+        "pnpm i --frozen-lockfile",
         "pnpm cdk synth"
       ]
     }
