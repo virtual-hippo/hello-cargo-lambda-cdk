@@ -4,6 +4,7 @@ import { Construct } from "constructs";
 
 import * as path from "path";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface HelloCargoLambdaCdkStackProps extends cdk.StackProps {}
 
 export class HelloCargoLambdaCdkStack extends cdk.Stack {

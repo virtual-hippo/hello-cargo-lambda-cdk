@@ -11,7 +11,7 @@ export class HelloCargoLambdaCdkStage extends cdk.Stage {
   constructor(scope: Construct, id: string, props: HelloCargoLambdaCdkStageProps) {
     super(scope, id, props);
 
-    new HelloCargoLambdaCdkStack(this, "HelloCargoLambdaCdkStack", {
+    new HelloCargoLambdaCdkStack(this, "HelloCargoLambdaCdk", {
       env: props.appParameter.env,
     });
   }
