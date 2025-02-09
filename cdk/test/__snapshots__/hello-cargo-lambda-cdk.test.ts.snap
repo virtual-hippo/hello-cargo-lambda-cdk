@@ -36,6 +36,31 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "Statement": [
             {
               "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-northeast-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1",
+                  ],
+                ],
+              },
+            },
+            {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
@@ -138,37 +163,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                 },
               ],
             },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
-            },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
-            },
           ],
           "Version": "2012-10-17",
         },
@@ -188,15 +182,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       ],
       "Properties": {
         "ArtifactStore": {
-          "EncryptionKey": {
-            "Id": {
-              "Fn::GetAtt": [
-                "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                "Arn",
-              ],
-            },
-            "Type": "KMS",
-          },
           "Location": {
             "Ref": "PipelineArtifactsBucketAEA9A052",
           },
@@ -252,7 +237,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                   "Version": "1",
                 },
                 "Configuration": {
-                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"1d8f4ef957dc7c28176bd159487828eb342ee0eaad8424eba9a9a5486515ced5"}]",
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"570a38b73d565ab45aef861a10c176c6b8adb7a2986141d0538acd9f182459fe"}]",
                   "ProjectName": {
                     "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                   },
@@ -289,7 +274,7 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                   "Version": "1",
                 },
                 "Configuration": {
-                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"61717cea36087818ca7660853a5450df1a47d52b0afa961625e909dda795a74b"}]",
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"814c134c953198966fde6d48e7283ade22e2635df11ca5a785d857a9343beb38"}]",
                   "ProjectName": {
                     "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                   },
@@ -481,12 +466,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "ServerSideEncryptionConfiguration": [
             {
               "ServerSideEncryptionByDefault": {
-                "KMSMasterKeyID": {
-                  "Fn::GetAtt": [
-                    "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                    "Arn",
-                  ],
-                },
                 "SSEAlgorithm": "aws:kms",
               },
             },
@@ -501,81 +480,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       },
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
-    },
-    "PipelineArtifactsBucketEncryptionKeyAlias94A07392": {
-      "DeletionPolicy": "Delete",
-      "Properties": {
-        "AliasName": "alias/codepipeline-hellocargolambdacdkpipeline2958007f",
-        "TargetKeyId": {
-          "Fn::GetAtt": [
-            "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::KMS::Alias",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "PipelineArtifactsBucketEncryptionKeyF5BF0670": {
-      "DeletionPolicy": "Delete",
-      "Properties": {
-        "KeyPolicy": {
-          "Statement": [
-            {
-              "Action": "kms:*",
-              "Effect": "Allow",
-              "Principal": {
-                "AWS": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":iam::123456789012:root",
-                    ],
-                  ],
-                },
-              },
-              "Resource": "*",
-            },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-              ],
-              "Effect": "Allow",
-              "Principal": {
-                "AWS": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":iam::",
-                      {
-                        "Ref": "AWS::AccountId",
-                      },
-                      ":role/cdk-hnb659fds-deploy-role-",
-                      {
-                        "Ref": "AWS::AccountId",
-                      },
-                      "-ap-northeast-1",
-                    ],
-                  ],
-                },
-              },
-              "Resource": "*",
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::KMS::Key",
-      "UpdateReplacePolicy": "Delete",
     },
     "PipelineArtifactsBucketPolicyF53CCC52": {
       "Properties": {
@@ -685,16 +589,13 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step HelloCargoLambdaCdkPipeline/Pipeline/Assets/FileAsset1",
-        "EncryptionKey": {
-          "Fn::GetAtt": [
-            "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-            "Arn",
-          ],
-        },
+        "EncryptionKey": "alias/aws/s3",
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "Image": "aws/codebuild/standard:7.0",
-          "ImagePullCredentialsType": "CODEBUILD",
+          "Image": {
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+          },
+          "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
@@ -806,6 +707,31 @@ exports[`Snapshot test for Dev pipeline 1`] = `
             },
             {
               "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-northeast-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1",
+                  ],
+                ],
+              },
+            },
+            {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -834,19 +760,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                 },
               ],
             },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
-            },
           ],
           "Version": "2012-10-17",
         },
@@ -868,16 +781,13 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step HelloCargoLambdaCdkPipeline/Pipeline/Build/SynthStep",
-        "EncryptionKey": {
-          "Fn::GetAtt": [
-            "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-            "Arn",
-          ],
-        },
+        "EncryptionKey": "alias/aws/s3",
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "Image": "aws/codebuild/standard:7.0",
-          "ImagePullCredentialsType": "CODEBUILD",
+          "Image": {
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+          },
+          "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
@@ -891,14 +801,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "BuildSpec": "{
   "version": "0.2",
   "phases": {
-    "install": {
-      "commands": [
-        "n stable",
-        "node --version",
-        "npm i -g pnpm@9.15.4",
-        "pnpm --version"
-      ]
-    },
     "build": {
       "commands": [
         "export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)",
@@ -1021,16 +923,13 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step HelloCargoLambdaCdkPipeline/Pipeline/Dev/Testing",
-        "EncryptionKey": {
-          "Fn::GetAtt": [
-            "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-            "Arn",
-          ],
-        },
+        "EncryptionKey": "alias/aws/s3",
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "Image": "aws/codebuild/standard:7.0",
-          "ImagePullCredentialsType": "CODEBUILD",
+          "Image": {
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+          },
+          "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
@@ -1044,14 +943,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "BuildSpec": "{
   "version": "0.2",
   "phases": {
-    "install": {
-      "commands": [
-        "n stable",
-        "node --version",
-        "npm i -g pnpm@9.15.4",
-        "pnpm --version"
-      ]
-    },
     "build": {
       "commands": [
         "cd cdk",
@@ -1087,6 +978,31 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       "Properties": {
         "PolicyDocument": {
           "Statement": [
+            {
+              "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-northeast-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1",
+                  ],
+                ],
+              },
+            },
+            {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
             {
               "Action": [
                 "logs:CreateLogGroup",
@@ -1184,34 +1100,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                 },
               ],
             },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
-            },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
-            },
           ],
           "Version": "2012-10-17",
         },
@@ -1281,22 +1169,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                   ],
                 },
               ],
-            },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
             },
             {
               "Action": "sts:AssumeRole",
@@ -1430,22 +1302,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
             },
             {
               "Action": [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
-            },
-            {
-              "Action": [
                 "s3:PutObjectAcl",
                 "s3:PutObjectVersionAcl",
               ],
@@ -1486,16 +1342,13 @@ exports[`Snapshot test for Dev pipeline 1`] = `
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step HelloCargoLambdaCdkPipeline/Pipeline/UpdatePipeline/SelfMutate",
-        "EncryptionKey": {
-          "Fn::GetAtt": [
-            "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-            "Arn",
-          ],
-        },
+        "EncryptionKey": "alias/aws/s3",
         "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "Image": "aws/codebuild/standard:7.0",
-          "ImagePullCredentialsType": "CODEBUILD",
+          "Image": {
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:646d02456c858757bffeb631231cd35f4b2b04e818c37f88a64676c92722bc1e",
+          },
+          "ImagePullCredentialsType": "SERVICE_ROLE",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
@@ -1547,6 +1400,31 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       "Properties": {
         "PolicyDocument": {
           "Statement": [
+            {
+              "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-northeast-1:123456789012:repository/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1",
+                  ],
+                ],
+              },
+            },
+            {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
             {
               "Action": [
                 "logs:CreateLogGroup",
@@ -1667,34 +1545,6 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                   ],
                 },
               ],
-            },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
-            },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
-                  "Arn",
-                ],
-              },
             },
           ],
           "Version": "2012-10-17",
