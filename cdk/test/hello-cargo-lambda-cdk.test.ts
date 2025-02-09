@@ -4,12 +4,23 @@ import { APP_PARAMETERS, PIPELINE_PARAMETERS } from "../lib/parameters";
 import { HelloCargoLambdaCdkPipelineStack } from "../lib/stacks";
 import { HelloCargoLambdaCdkStage } from "../lib/stages";
 
+const serializer = {
+  test: (val: unknown) => typeof val === "string",
+  serialize: (val: string): string =>
+    `"${val
+      // Asset hash をダミー値に置き換え
+      .replace(/([a-f0-9]{64})/, "HASH_REPLACED")
+      // Construct address をダミー値に置き換え
+      .replace(/[a-f0-9]{42}/, "[CONSTRUCT_ADDR_REPLACED]")}"`,
+};
+
 test("Snapshot test for Dev stage", () => {
   const app = new cdk.App();
   const stage = new HelloCargoLambdaCdkStage(app, "Dev", {
     appParameter: APP_PARAMETERS.Dev,
   });
 
+  expect.addSnapshotSerializer(serializer);
   expect(Template.fromStack(stage.helloCargoLambdaCdkStack)).toMatchSnapshot();
 });
 
@@ -25,5 +36,6 @@ test("Snapshot test for Dev pipeline", () => {
     appParameter: APP_PARAMETERS.Dev,
   });
 
+  expect.addSnapshotSerializer(serializer);
   expect(Template.fromStack(pipelineStack)).toMatchSnapshot();
 });
