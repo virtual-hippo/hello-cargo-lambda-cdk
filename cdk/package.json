@@ -8,7 +8,11 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "lint": "eslint --fix .",
+    "lint:ci": "eslint .",
+    "fmt": "prettier --write .",
+    "fmt:ci": "prettier --check ."
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
