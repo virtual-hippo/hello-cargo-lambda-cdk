@@ -10,3 +10,5 @@ cargo-lambda-cdk を使ってみるサンプルプロジェクト
 - cargo-lambda
 - cargo-lambda-cdk
 - cargo-make
+- awscli
+- awscurl
