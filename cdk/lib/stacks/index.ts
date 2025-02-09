@@ -1,1 +1,1 @@
-export * from './hello-cargo-lambda-cdk-stack';
+export * from "./hello-cargo-lambda-cdk-stack";

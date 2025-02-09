@@ -1,2 +1,2 @@
-export * from './app-parameter-type';
-export * from './parameters';
+export * from "./app-parameter-type";
+export * from "./parameters";
