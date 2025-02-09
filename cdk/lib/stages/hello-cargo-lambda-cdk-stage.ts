@@ -8,11 +8,16 @@ export interface HelloCargoLambdaCdkStageProps extends cdk.StageProps {
 }
 
 export class HelloCargoLambdaCdkStage extends cdk.Stage {
+  // for test
+  readonly helloCargoLambdaCdkStack: HelloCargoLambdaCdkStack;
+
   constructor(scope: Construct, id: string, props: HelloCargoLambdaCdkStageProps) {
     super(scope, id, props);
 
-    new HelloCargoLambdaCdkStack(this, "HelloCargoLambdaCdk", {
+    const helloCargoLambdaCdkStack = new HelloCargoLambdaCdkStack(this, "HelloCargoLambdaCdk", {
       env: props.appParameter.env,
     });
+
+    this.helloCargoLambdaCdkStack = helloCargoLambdaCdkStack;
   }
 }
