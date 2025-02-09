@@ -2,19 +2,18 @@ import * as cdk from "aws-cdk-lib";
 import { aws_iam as iam, pipelines } from "aws-cdk-lib";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { Construct } from "constructs";
-import { AppParameterType, PipelineParameterType } from "../parameters";
+import { AppParameterType } from "../parameters";
 import { HelloCargoLambdaCdkStage } from "../stages";
 
 export interface HelloCargoLambdaCdkPipelineProps extends cdk.StackProps {
+  readonly sourceRepository: string;
+  readonly sourceBranch: string;
   readonly appParameter: AppParameterType;
-  readonly pipelineParameter: PipelineParameterType;
 }
 
 export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: HelloCargoLambdaCdkPipelineProps) {
     super(scope, id, props);
-
-    const { appParameter, pipelineParameter } = props;
 
     const deployRole = new iam.Role(this, "CodeBuildDeployRole", {
       assumedBy: new iam.ServicePrincipal("codebuild.amazonaws.com"),
@@ -30,13 +29,9 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
     const pipeline = new pipelines.CodePipeline(this, "Pipeline", {
       crossAccountKeys: true,
       synth: new pipelines.CodeBuildStep("SynthStep", {
-        input: pipelines.CodePipelineSource.connection(
-          pipelineParameter.sourceRepository,
-          pipelineParameter.sourceBranch,
-          {
-            connectionArn: connectionArn,
-          },
-        ),
+        input: pipelines.CodePipelineSource.connection(props.sourceRepository, props.sourceBranch, {
+          connectionArn: connectionArn,
+        }),
         installCommands: ["n stable", "node --version", "npm i -g pnpm@9.15.4", "pnpm --version"],
         commands: ["cd cdk", "pnpm i --frozen-lockfile -P", "pnpm cdk synth"],
         role: deployRole,
@@ -49,8 +44,11 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
       commands: ["cd cdk", "pnpm i --frozen-lockfile", "pnpm cdk test"],
     });
 
-    pipeline.addStage(new HelloCargoLambdaCdkStage(this, "HelloCargoLambdaCdkStage", { appParameter }), {
-      pre: [testStep],
-    });
+    pipeline.addStage(
+      new HelloCargoLambdaCdkStage(this, "HelloCargoLambdaCdkStage", { appParameter: props.appParameter }),
+      {
+        pre: [testStep],
+      },
+    );
   }
 }
