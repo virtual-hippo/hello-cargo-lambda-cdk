@@ -56,7 +56,7 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
     });
 
     const testStep = new pipelines.ShellStep("Testing", {
-      commands: ["makers clippy-ci, makers test-ci"],
+      commands: ["makers clippy-ci", "makers test-ci"],
     });
 
     pipeline.addStage(new HelloCargoLambdaCdkStage(this, props.envAlias, { appParameter: props.appParameter }), {
