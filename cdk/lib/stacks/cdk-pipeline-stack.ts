@@ -46,9 +46,9 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
       }),
     });
 
-    const testStep = new pipelines.ShellStep("RunTests", {
+    const testStep = new pipelines.ShellStep("Testing", {
       installCommands: ["n stable", "node --version", "npm i -g pnpm@9.15.4", "pnpm --version"],
-      commands: ["cd cdk", "pnpm i --frozen-lockfile", "pnpm cdk test"],
+      commands: ["cd cdk", "pnpm i --frozen-lockfile", "pnpm test"],
     });
 
     pipeline.addStage(new HelloCargoLambdaCdkStage(this, props.envAlias, { appParameter: props.appParameter }), {
