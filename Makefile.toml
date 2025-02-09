@@ -6,7 +6,7 @@ env_scripts = [
     '''
     #!/usr/bin/env bash
     echo "--- Using Environments -----------------"
-    echo "AWS_PROFILE      = $AWS_PROFILE_DEV"
+    echo "AWS_PROFILE      = $AWS_PROFILE"
     echo "----------------------------------------"
     '''
 ]
