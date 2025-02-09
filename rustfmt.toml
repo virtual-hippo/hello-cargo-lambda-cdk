@@ -33,7 +33,7 @@ match_arm_blocks = false
 
 # コメントの最大幅
 wrap_comments = true
-comment_width = 80
+comment_width = 120
 
 # 配列やタプルが長くなったら改行する
 array_width = 60
