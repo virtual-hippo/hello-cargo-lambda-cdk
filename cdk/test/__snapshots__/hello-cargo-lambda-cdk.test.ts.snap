@@ -948,7 +948,8 @@ exports[`Snapshot test for Dev pipeline 1`] = `
   "phases": {
     "build": {
       "commands": [
-        "makers clippy-ci, makers test-ci"
+        "makers clippy-ci",
+        "makers test-ci"
       ]
     }
   }
