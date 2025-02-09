@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib";
-import { PARAMETERS } from "../lib/parameters";
-import { HelloCargoLambdaCdkStage } from "../lib/stages";
+import { APP_PARAMETERS, PIPELINE_PARAMETERS } from "../lib/parameters";
+import { HelloCargoLambdaCdkPipelineStack } from "../lib/stacks";
 
 const app = new cdk.App();
 
-new HelloCargoLambdaCdkStage(app, "HelloCargoLambdaCdkStage", {
-  appParameter: PARAMETERS.DEV,
+new HelloCargoLambdaCdkPipelineStack(app, "HelloCargoLambdaCdkPipeline", {
+  appParameter: APP_PARAMETERS.DEV,
+  pipelineParameter: PIPELINE_PARAMETERS.DEV,
 });
