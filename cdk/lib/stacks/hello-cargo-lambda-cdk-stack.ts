@@ -14,7 +14,7 @@ export class HelloCargoLambdaCdkStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
-    new RustFunction(this, "RustFunction", {
+    const fn = new RustFunction(this, "RustFunction", {
       manifestPath: path.join(
         __dirname,
         "../../../",
@@ -23,5 +23,7 @@ export class HelloCargoLambdaCdkStack extends cdk.Stack {
       ),
       binaryName: "hello",
     });
+
+    fn.addFunctionUrl();
   }
 }
