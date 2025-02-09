@@ -31,9 +31,11 @@ async fn main() -> Result<(), Error> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use lambda_http::{Request, RequestExt};
     use std::collections::HashMap;
+
+    use lambda_http::{Request, RequestExt};
+
+    use super::*;
 
     #[tokio::test]
     async fn test_generic_http_handler() {
