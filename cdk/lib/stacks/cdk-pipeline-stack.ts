@@ -1,7 +1,10 @@
 import * as cdk from "aws-cdk-lib";
-import { aws_iam as iam, pipelines } from "aws-cdk-lib";
+import { aws_codebuild as codebuild, aws_iam as iam, pipelines } from "aws-cdk-lib";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { Construct } from "constructs";
+
+import * as path from "path";
+
 import { AppParameterType, Env } from "../parameters";
 import { HelloCargoLambdaCdkStage } from "../stages";
 
@@ -27,13 +30,16 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
 
     const connectionArn = StringParameter.valueFromLookup(this, "/github/hello-cargo-lambda-cdk/connectionArn");
 
+    const buildImage = codebuild.LinuxBuildImage.fromAsset(this, "LinuxBuildImage", {
+      directory: path.join(__dirname, "../../", "assets/docker-images/codebuild"),
+    });
+
     const pipeline = new pipelines.CodePipeline(this, "Pipeline", {
-      crossAccountKeys: true,
+      codeBuildDefaults: { buildEnvironment: { buildImage } },
       synth: new pipelines.CodeBuildStep("SynthStep", {
         input: pipelines.CodePipelineSource.connection(props.sourceRepository, props.sourceBranch, {
           connectionArn: connectionArn,
         }),
-        installCommands: ["n stable", "node --version", "npm i -g pnpm@9.15.4", "pnpm --version"],
         commands: [
           // アカウント ID 明示的に定義していないので動的に指定する
           "export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)",
@@ -47,7 +53,6 @@ export class HelloCargoLambdaCdkPipelineStack extends cdk.Stack {
     });
 
     const testStep = new pipelines.ShellStep("Testing", {
-      installCommands: ["n stable", "node --version", "npm i -g pnpm@9.15.4", "pnpm --version"],
       commands: ["cd cdk", "pnpm i --frozen-lockfile", "pnpm test"],
     });
 
