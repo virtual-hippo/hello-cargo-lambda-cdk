@@ -1593,6 +1593,16 @@ exports[`Snapshot test for Dev pipeline 1`] = `
 
 exports[`Snapshot test for Dev stage 1`] = `
 {
+  "Outputs": {
+    "RustFunctionUrl": {
+      "Value": {
+        "Fn::GetAtt": [
+          "RustFunctionFunctionUrl9F296956",
+          "FunctionUrl",
+        ],
+      },
+    },
+  },
   "Parameters": {
     "BootstrapVersion": {
       "Default": "/cdk-bootstrap/hnb659fds/version",
