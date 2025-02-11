@@ -2,7 +2,7 @@
 
 ## Dscription
 
-cargo-lambda-cdk を使ってみるサンプルプロジェクト
+cargo-lambda-cdk を使ってみるためのサンプルプロジェクト
 
 ## Tools
 - asdf
