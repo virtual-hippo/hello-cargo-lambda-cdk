@@ -1,6 +1,6 @@
 # hello-cargo-lambda-cdk
 
-## Dscription
+## Description
 
 cargo-lambda-cdk を使ってみるためのサンプルプロジェクト
 
