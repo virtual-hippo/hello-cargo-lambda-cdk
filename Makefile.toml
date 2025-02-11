@@ -42,6 +42,21 @@ args = [
   "--status-level", "all", "--test-threads=1",
 ]
 
+[tasks.cdk-test]
+install_script = ['''
+#!/usr/bin/env bash
+cd cdk
+pnpm i --frozen-lockfile
+''']
+script = '''
+#!/usr/bin/env bash
+cd cdk
+pnpm i --frozen-lockfile
+pnpm fmt:ci
+pnpm lint:ci
+pnpm test
+'''
+
 [tasks.clippy-ci]
 command = "cargo"
 args = ["clippy", "--", "--no-deps", "-Dwarnings"]
