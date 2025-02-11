@@ -11,13 +11,26 @@ export class HelloCargoLambdaCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: HelloCargoLambdaCdkStackProps) {
     super(scope, id, props);
 
-    const fn = new RustFunction(this, "RustFunction", {
-      manifestPath: path.join(__dirname, "../../../", "aws-lambda-functions", "Cargo.toml"),
-      binaryName: "hello",
-    });
+    {
+      const fn = new RustFunction(this, "HelloFunction", {
+        manifestPath: path.join(__dirname, "../../../", "aws-lambda-functions", "Cargo.toml"),
+        binaryName: "hello",
+      });
 
-    const fnUrl = fn.addFunctionUrl();
+      const fnUrl = fn.addFunctionUrl();
 
-    new cdk.CfnOutput(this, "RustFunctionUrl", { value: fnUrl.url });
+      new cdk.CfnOutput(this, "HelloFunctionUrl", { value: fnUrl.url });
+    }
+
+    {
+      const fn = new RustFunction(this, "AddFunction", {
+        manifestPath: path.join(__dirname, "../../../", "aws-lambda-functions", "Cargo.toml"),
+        binaryName: "add",
+      });
+
+      const fnUrl = fn.addFunctionUrl();
+
+      new cdk.CfnOutput(this, "AddFunctionUrl", { value: fnUrl.url });
+    }
   }
 }
