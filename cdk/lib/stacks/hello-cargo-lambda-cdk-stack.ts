@@ -16,6 +16,8 @@ export class HelloCargoLambdaCdkStack extends cdk.Stack {
       binaryName: "hello",
     });
 
-    fn.addFunctionUrl();
+    const fnUrl = fn.addFunctionUrl();
+
+    new cdk.CfnOutput(this, "RustFunctionUrl", { value: fnUrl.url });
   }
 }
