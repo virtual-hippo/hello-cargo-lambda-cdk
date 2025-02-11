@@ -1,3 +1,7 @@
 [toolchain]
+#
+# specify 1.81.0 to match cargo-lambda 1.6.3
+# https://github.com/cargo-lambda/cargo-lambda/blob/v1.6.3/Dockerfile
+#
 channel = "1.81.0"
 components = ["rustfmt", "clippy"]
