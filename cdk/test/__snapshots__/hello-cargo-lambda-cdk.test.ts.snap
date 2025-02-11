@@ -324,6 +324,32 @@ exports[`Snapshot test for Dev pipeline 1`] = `
                 },
                 "RunOrder": 1,
               },
+              {
+                "ActionTypeId": {
+                  "Category": "Build",
+                  "Owner": "AWS",
+                  "Provider": "CodeBuild",
+                  "Version": "1",
+                },
+                "Configuration": {
+                  "ProjectName": {
+                    "Ref": "PipelineAssetsFileAsset24D2D639B",
+                  },
+                },
+                "InputArtifacts": [
+                  {
+                    "Name": "SynthStep_Output",
+                  },
+                ],
+                "Name": "FileAsset2",
+                "RoleArn": {
+                  "Fn::GetAtt": [
+                    "PipelineCodeBuildActionRole226DB0CB",
+                    "Arn",
+                  ],
+                },
+                "RunOrder": 1,
+              },
             ],
             "Name": "Assets",
           },
@@ -626,6 +652,52 @@ exports[`Snapshot test for Dev pipeline 1`] = `
       },
       "Type": "AWS::CodeBuild::Project",
     },
+    "PipelineAssetsFileAsset24D2D639B": {
+      "Properties": {
+        "Artifacts": {
+          "Type": "CODEPIPELINE",
+        },
+        "Cache": {
+          "Type": "NO_CACHE",
+        },
+        "Description": "Pipeline step HelloCargoLambdaCdkPipeline/Pipeline/Assets/FileAsset2",
+        "EncryptionKey": "alias/aws/s3",
+        "Environment": {
+          "ComputeType": "BUILD_GENERAL1_SMALL",
+          "Image": {
+            "Fn::Sub": "123456789012.dkr.ecr.ap-northeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-123456789012-ap-northeast-1:HASH_REPLACED",
+          },
+          "ImagePullCredentialsType": "SERVICE_ROLE",
+          "PrivilegedMode": false,
+          "Type": "LINUX_CONTAINER",
+        },
+        "ServiceRole": {
+          "Fn::GetAtt": [
+            "PipelineAssetsFileRole59943A77",
+            "Arn",
+          ],
+        },
+        "Source": {
+          "BuildSpec": "{
+  "version": "0.2",
+  "phases": {
+    "install": {
+      "commands": [
+        "npm install -g cdk-assets@latest"
+      ]
+    },
+    "build": {
+      "commands": [
+        "cdk-assets --path \\"assembly-HelloCargoLambdaCdkPipeline-Dev/HelloCargoLambdaCdkPipelineDevHelloCargoLambdaCdk0A053A3D.assets.json\\" --verbose publish \\"HASH_REPLACED:current_account-ap-northeast-1\\""
+      ]
+    }
+  }
+}",
+          "Type": "CODEPIPELINE",
+        },
+      },
+      "Type": "AWS::CodeBuild::Project",
+    },
     "PipelineAssetsFileRole59943A77": {
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -887,6 +959,20 @@ exports[`Snapshot test for Dev pipeline 1`] = `
               "Resource": {
                 "Fn::GetAtt": [
                   "PipelineAssetsFileAsset185A67CB4",
+                  "Arn",
+                ],
+              },
+            },
+            {
+              "Action": [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:StopBuild",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "PipelineAssetsFileAsset24D2D639B",
                   "Arn",
                 ],
               },
@@ -1594,10 +1680,18 @@ exports[`Snapshot test for Dev pipeline 1`] = `
 exports[`Snapshot test for Dev stage 1`] = `
 {
   "Outputs": {
-    "RustFunctionUrl": {
+    "AddFunctionUrl": {
       "Value": {
         "Fn::GetAtt": [
-          "RustFunctionFunctionUrl9F296956",
+          "AddFunctionFunctionUrl3388B603",
+          "FunctionUrl",
+        ],
+      },
+    },
+    "HelloFunctionUrl": {
+      "Value": {
+        "Fn::GetAtt": [
+          "HelloFunctionFunctionUrl0E00A69D",
           "FunctionUrl",
         ],
       },
@@ -1611,9 +1705,9 @@ exports[`Snapshot test for Dev stage 1`] = `
     },
   },
   "Resources": {
-    "RustFunctionF5AC225C": {
+    "AddFunction40BF8FE8": {
       "DependsOn": [
-        "RustFunctionServiceRole0AEC2440",
+        "AddFunctionServiceRoleBB1C2CD7",
       ],
       "Properties": {
         "Architectures": [
@@ -1628,7 +1722,7 @@ exports[`Snapshot test for Dev stage 1`] = `
         "Handler": "bootstrap",
         "Role": {
           "Fn::GetAtt": [
-            "RustFunctionServiceRole0AEC2440",
+            "AddFunctionServiceRoleBB1C2CD7",
             "Arn",
           ],
         },
@@ -1636,19 +1730,87 @@ exports[`Snapshot test for Dev stage 1`] = `
       },
       "Type": "AWS::Lambda::Function",
     },
-    "RustFunctionFunctionUrl9F296956": {
+    "AddFunctionFunctionUrl3388B603": {
       "Properties": {
         "AuthType": "AWS_IAM",
         "TargetFunctionArn": {
           "Fn::GetAtt": [
-            "RustFunctionF5AC225C",
+            "AddFunction40BF8FE8",
             "Arn",
           ],
         },
       },
       "Type": "AWS::Lambda::Url",
     },
-    "RustFunctionServiceRole0AEC2440": {
+    "AddFunctionServiceRoleBB1C2CD7": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "HelloFunctionD909AE8C": {
+      "DependsOn": [
+        "HelloFunctionServiceRole186F1BA8",
+      ],
+      "Properties": {
+        "Architectures": [
+          "x86_64",
+        ],
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-ap-northeast-1",
+          },
+          "S3Key": "HASH_REPLACED.zip",
+        },
+        "Handler": "bootstrap",
+        "Role": {
+          "Fn::GetAtt": [
+            "HelloFunctionServiceRole186F1BA8",
+            "Arn",
+          ],
+        },
+        "Runtime": "provided.al2023",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "HelloFunctionFunctionUrl0E00A69D": {
+      "Properties": {
+        "AuthType": "AWS_IAM",
+        "TargetFunctionArn": {
+          "Fn::GetAtt": [
+            "HelloFunctionD909AE8C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Url",
+    },
+    "HelloFunctionServiceRole186F1BA8": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
