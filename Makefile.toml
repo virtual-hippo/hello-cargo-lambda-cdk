@@ -42,6 +42,13 @@ args = [
   "--status-level", "all", "--test-threads=1",
 ]
 
+[tasks.clippy-ci]
+command = "cargo"
+args = ["clippy", "--", "--no-deps", "-Dwarnings"]
+
+[tasks.test-ci]
+run_task = "test"
+
 [tasks.cdk-test]
 install_script = ['''
 #!/usr/bin/env bash
@@ -57,9 +64,15 @@ pnpm lint:ci
 pnpm test
 '''
 
-[tasks.clippy-ci]
-command = "cargo"
-args = ["clippy", "--", "--no-deps", "-Dwarnings"]
-
-[tasks.test-ci]
-run_task = "test"
+[tasks.deploy]
+install_script = ['''
+#!/usr/bin/env bash
+cd cdk
+pnpm i --frozen-lockfile
+''']
+script = '''
+#!/usr/bin/env bash
+cd cdk
+pnpm i --frozen-lockfile
+pnpm cdk deploy HelloCargoLambdaCdkPipeline/Dev/HelloCargoLambdaCdk
+'''
