@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "aws-lambda-functions", "modules/api",
+]
+
+[workspace.dependencies]
+api = { path = "./modules/api" }
